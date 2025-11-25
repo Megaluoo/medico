@@ -1,49 +1,38 @@
 <?php
-spl_autoload_register(function ($class) {
-    $paths = [
-        __DIR__ . '/../app/core/' . $class . '.php',
-        __DIR__ . '/../app/controllers/' . $class . '.php',
-        __DIR__ . '/../app/models/' . $class . '.php',
-    ];
+require_once __DIR__ . '/../bootstrap/session.php';
+require_once __DIR__ . '/../app/helpers.php';
+require_once __DIR__ . '/../app/middleware/AuthMiddleware.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
 
-    foreach ($paths as $path) {
-        if (file_exists($path)) {
-            require_once $path;
-            return;
+$authController = new AuthController();
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
+
+switch ($uri) {
+    case '/login':
+        if (currentUser() && !isPost()) {
+            redirect('/');
         }
-    }
-});
+        $authController->login();
+        break;
 
-Session::start();
+    case '/logout':
+        if (!isPost()) {
+            redirect('/');
+        }
+        $authController->logout();
+        break;
 
-$router = new Router();
+    case '/admin':
+        requireRole(['admin']);
+        view('pages/admin.php', ['title' => 'Panel de Administración']);
+        break;
 
-$router->get('/', function () {
-    (new DashboardController())->index();
-});
+    case '/':
+        requireAuth();
+        view('pages/home.php', ['title' => 'Panel principal']);
+        break;
 
-$router->get('/dashboard', function () {
-    (new DashboardController())->index();
-});
-
-$router->get('/pacientes', function () {
-    (new PatientsController())->index();
-});
-
-$router->get('/citas', function () {
-    (new AppointmentsController())->index();
-});
-
-$router->get('/pagos', function () {
-    (new PaymentsController())->index();
-});
-
-$router->get('/historias', function () {
-    (new RecordsController())->index();
-});
-
-$router->get('/recetas', function () {
-    (new PrescriptionsController())->index();
-});
-
-$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+    default:
+        http_response_code(404);
+        echo 'Página no encontrada';
+}
