@@ -1,0 +1,27 @@
+[
+  {
+    "id": "pay_001",
+    "patient": "Ana García",
+    "service_id": "srv_001",
+    "service_name": "Consulta general",
+    "service_price": 30,
+    "payment_method": "USD",
+    "amount_paid": 20,
+    "balance": 10,
+    "created_at": "2024-06-01T10:00:00Z",
+    "installments": [
+      {
+        "amount": 20,
+        "method": "USD",
+        "note": "Pago inicial",
+        "date": "2024-06-01T10:00:00Z"
+      },
+      {
+        "amount": 10,
+        "method": "Efectivo",
+        "note": "Abono",
+        "date": "2024-06-03T15:00:00Z"
+      }
+    ]
+  }
+]

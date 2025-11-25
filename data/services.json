@@ -1,0 +1,14 @@
+[
+  {
+    "id": "srv_001",
+    "name": "Consulta general",
+    "price": 30,
+    "type": "Consulta"
+  },
+  {
+    "id": "srv_002",
+    "name": "Laboratorio básico",
+    "price": 50,
+    "type": "Laboratorio"
+  }
+]
