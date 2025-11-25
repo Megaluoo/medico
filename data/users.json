@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Dra. Ana López",
+    "email": "ana@example.com",
+    "password": "$2y$10$JjNd7gO6jwxKF1uHmIi.YOBivGi99ZTSdKCbFf8gDuwZQzQ0jrISG",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "Dr. Carlos Ruiz",
+    "email": "carlos@example.com",
+    "password": "$2y$10$JjNd7gO6jwxKF1uHmIi.YOBivGi99ZTSdKCbFf8gDuwZQzQ0jrISG",
+    "role": "medico"
+  }
+]
